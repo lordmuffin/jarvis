@@ -22,4 +22,8 @@ app = FastAPI(
 async def health_check():
     return {"status": "ok"}
 
+@app.get("/")
+async def root():
+    return {"message": "The Provocateur-Interviewer Service is running. Check /health for status."}
+
 app.include_router(interview_router, prefix="/api/v1")

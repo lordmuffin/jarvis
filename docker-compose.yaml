@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  router:
+    build: 
+      context: ./services/router
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://postgres:postgres@db:5432/jarvis_router
+      - LEMONADE_SERVER_URL=http://host.docker.internal:8000 # Assuming Lemonade runs on host
+    depends_on:
+      - db
+    volumes:
+      - ./services/router:/app
+
+  db:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=jarvis_router
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  console:
+    build:
+      context: ./apps/jarvis-console
+    ports:
+      - "3000:3000"
+    depends_on:
+      - router
+
+volumes:
+  postgres_data:

@@ -1,0 +1,17 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: jarvis-router-db
+  namespace: jarvis
+spec:
+  instances: 3
+  storage:
+    size: 1Gi
+  bootstrap:
+    initdb:
+      database: jarvis_router
+      owner: jarvis
+      secret:
+        name: jarvis-router-db-superuser
+  # monitoring:
+  #   enablePodMonitor: true
