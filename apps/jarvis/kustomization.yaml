@@ -4,3 +4,5 @@ resources:
   - ../../infrastructure/components/nats
   - ../../infrastructure/components/qdrant
   - ../../services/provocateur-interviewer
+  - ../../services/router
+  - ../../apps/jarvis-console

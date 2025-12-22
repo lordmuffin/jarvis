@@ -3,9 +3,9 @@ kind: Kustomization
 
 resources:
   - deployment.yaml
-  - cnpg-cluster.yaml
   - service.yaml
+  - ingress.yaml
 
 images:
-  - name: ghcr.io/lordmuffin/jarvis-router
+  - name: ghcr.io/lordmuffin/jarvis-console
     newTag: latest
