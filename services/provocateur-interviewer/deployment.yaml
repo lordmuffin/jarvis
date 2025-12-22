@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: provocateur-interviewer
+  labels:
+    app: provocateur-interviewer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: provocateur-interviewer
+  template:
+    metadata:
+      labels:
+        app: provocateur-interviewer
+    spec:
+      containers:
+      - name: provocateur-interviewer
+        image: ghcr.io/lordmuffin/jarvis-provocateur-interviewer:latest
+        ports:
+        - containerPort: 8000
+        env:
+        - name: QDRANT_HOST
+          value: "qdrant"
+        - name: QDRANT_PORT
+          value: "6333"
+        - name: NATS_URL
+          value: "nats://nats:4222"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: provocateur-interviewer
+spec:
+  selector:
+    app: provocateur-interviewer
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8000
+
