@@ -1,4 +1,5 @@
 from pydantic_settings import BaseSettings
+from pydantic import field_validator
 from typing import Optional
 
 class Settings(BaseSettings):
@@ -23,6 +24,12 @@ class Settings(BaseSettings):
     GEMINI_API_KEY: Optional[str] = None
     AZURE_OPENAI_KEY: Optional[str] = None
     AZURE_OPENAI_ENDPOINT: Optional[str] = None
+
+    @field_validator("DATABASE_URL")
+    def fix_database_url(cls, v: str) -> str:
+        if v and v.startswith("postgresql://"):
+            return v.replace("postgresql://", "postgresql+asyncpg://", 1)
+        return v
 
     class Config:
         case_sensitive = True
