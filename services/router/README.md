@@ -43,4 +43,3 @@ Environment Variables:
    docker build -t jarvis-router .
    docker run -p 8000:8000 jarvis-router
    ```
-
