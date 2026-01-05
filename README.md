@@ -46,3 +46,47 @@ The project uses Kubernetes (Kustomize) for deployment.
 - **Router**: `services/router/kustomization.yaml`
 - **Qdrant**: `infrastructure/components/qdrant`
 - **NATS**: `infrastructure/components/nats`
+
+## CLI Usage
+
+The Jarvis CLI is a terminal-based interface for interacting with the Jarvis agent.
+
+### Installation
+
+Build the CLI binary:
+```bash
+go build -o jarvis ./cmd/jarvis
+```
+
+### Running
+
+Run the built binary:
+```bash
+./jarvis
+```
+
+Or run directly with Go:
+```bash
+go run ./cmd/jarvis
+```
+
+### Environment Variables
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `REMOTE_DAGGER_ADDR` | Address of a remote Dagger engine (e.g., `tcp://dagger-engine:1234`) | `""` (Local engine) |
+
+### Interactive Mode
+Once started, the CLI provides an interactive TUI. You can type commands in natural language.
+
+**Examples:**
+- "List pods in the default namespace"
+- "Deploy nginx"
+
+### Examples
+
+**Connect to a remote Dagger engine:**
+```bash
+export REMOTE_DAGGER_ADDR=tcp://192.168.1.10:1234
+./jarvis
+```

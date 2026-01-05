@@ -13,7 +13,7 @@ import (
 	"github.com/charmbracelet/bubbles/textinput"
 	"github.com/charmbracelet/bubbles/viewport"
 	tea "github.com/charmbracelet/bubbletea"
-	"github.com/charmbracelet/lipgloss"
+
 )
 
 var (
@@ -124,7 +124,20 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
                         return errMsg(fmt.Errorf("step failed: %s: %w", step, err))
                     }
                     output.WriteString(fmt.Sprintf("Step '%s' Output:\n%s\n", step, out))
-                } else {
+                } else if strings.HasPrefix(step, "RunShell:") {
+					cmdStr := strings.TrimSpace(strings.TrimPrefix(step, "RunShell:"))
+					
+					// Run generic shell command in Alpine
+					container := client.Container().
+						From("alpine:latest").
+						WithExec([]string{"sh", "-c", cmdStr})
+					
+					out, err := container.Stdout(ctx)
+					if err != nil {
+						return errMsg(fmt.Errorf("shell step failed: %s: %w", step, err))
+					}
+					output.WriteString(fmt.Sprintf("Step '%s' Output:\n%s\n", step, out))
+				} else {
                      output.WriteString(fmt.Sprintf("Skipping unknown step type: %s\n", step))
                 }
             }

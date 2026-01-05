@@ -40,9 +40,8 @@ func (a *GeminiAgent) Ask(ctx context.Context, prompt string) (Plan, error) {
 	} else if strings.Contains(lowerPrompt, "deploy nginx") {
 		steps = append(steps, "RunKubectl: run nginx --image=nginx --restart=Never")
 	} else {
-		// Default fallback plan
-		steps = append(steps, fmt.Sprintf("Analyze request: %s", prompt))
-		steps = append(steps, "Generate suggestion")
+		// Default fallback: Execute as shell command
+		steps = append(steps, fmt.Sprintf("RunShell: %s", prompt))
 	}
 
 	return Plan{Steps: steps}, nil

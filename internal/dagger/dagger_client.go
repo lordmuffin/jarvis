@@ -3,6 +3,7 @@ package dagger
 import (
 	"context"
 	"fmt"
+	"io"
 	"os"
 
 	"dagger.io/dagger"
@@ -32,7 +33,7 @@ func NewClient(ctx context.Context) (*dagger.Client, error) {
         // We will assume setting the env var implies we should pass it to the runner or it's handled by the environment.
 	} else {
         // Local execution
-        opts = append(opts, dagger.LogOutput(os.Stderr))
+        opts = append(opts, dagger.WithLogOutput(io.Discard))
     }
 
 	client, err := dagger.Connect(ctx, opts...)
