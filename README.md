@@ -1,92 +1,105 @@
 # Jarvis
-**The MONOREPO Executive Assistant**
+**The Intelligent Platform Engineering Ecosystem**
 
-This repository contains the microservices and applications that power Jarvis, a personal knowledge automation platform.
+Jarvis is a "Platform-in-a-Box" designed to be the single entry point for managing infrastructure, deployments, and automation. It serves as an intelligent CLI that orchestrates tools like Dagger, LXC, and Kubernetes (K9s) to provide a seamless platform engineering experience.
 
-## Architecture
+## 🧠 Core Philosophy: The Agentic Controller
 
-The system is composed of several key components:
+Jarvis operates as an **Agentic Controller**. It doesn't just run scripts; it observes, plans, and executes.
 
-### Apps
-- **[Jarvis Console](apps/jarvis-console/README.md)**: The administrative "Control Plane" dashboard. Built with Next.js, it provides system monitoring (HUD), traffic control visualization, and configuration management.
+- **Control Plane**: The Jarvis CLI (Go) acts as the brain.
+- **Execution Plane**: [Dagger](https://dagger.io) acts as the muscle, running portable, containerized functions.
+- **Isolation Plane**: [LXC](https://linuxcontainers.org/) provides "Real GOAT" sandboxing for heavy-duty tasks.
+- **Observability**: Integrated [K9s](https://k9scli.io/) bridge for deep Kubernetes introspection.
+- **Security**: Native **1Password** integration—secrets are injected in memory, never written to disk.
 
-### Services
-- **[Intelligent Burst Router](services/router/README.md)**: A FastAPI-based "Smart Router" that manages traffic between the local Lemonade Server and Cloud Providers (Gemini/Azure). It makes routing decisions based on Time-To-First-Token (TTFT) and System Capacity (Memory Pressure).
-- **Provocateur Interviewer**: Real-time voice interview service.
-- **Jarvis Core**: Core logic and integrations.
+See the [Architecture Diagram](docs/architecture.md) for more details.
 
-### Infrastructure
-- **Lemonade Server**: Local LLM Inference Server.
-- **Qdrant**: Vector Database for RAG.
-- **NATS**: Messaging System.
-- **CloudNativePG**: PostgreSQL for persistence.
+---
 
-## Getting Started
+## 🚀 Features
 
-### Prerequisites
-- Docker & Docker Compose
-- Python 3.11+
-- Node.js 18+
-
-### Local Development
-To start the entire stack locally:
-
+### 1. Dagger Function Engine
+Run platform tasks as portable Dagger pipelines.
 ```bash
-docker-compose up --build
+# Run a specific Dagger function
+jarvis run deployments:update-image
 ```
 
-This will spin up:
-- **Router**: `http://localhost:8000`
-- **Console**: `http://localhost:3000`
-- **PostgreSQL**: `localhost:5432`
+### 2. LXC Integration ("The Real GOAT")
+Bootstrap and manage Linux Containers for robust, isolated testing environments.
+```bash
+# Create a new Ubuntu container
+jarvis lxc bootstrap my-test-env
 
-## Deployment
+# Snapshot a container
+jarvis lxc snapshot my-test-env
+```
 
-The project uses Kubernetes (Kustomize) for deployment.
-- **Router**: `services/router/kustomization.yaml`
-- **Qdrant**: `infrastructure/components/qdrant`
-- **NATS**: `infrastructure/components/nats`
+### 3. Kubernetes Management
+Launch a fully configured K9s TUI directly from Jarvis.
+```bash
+# Open K9s
+jarvis k9s
+```
 
-## CLI Usage
 
-The Jarvis CLI is a terminal-based interface for interacting with the Jarvis agent.
+### 4. OpenTofu Integration
+Manage infrastructure with OpenTofu (formerly Terraform) using Dagger pipelines.
+```bash
+# Plan infrastructure
+jarvis tofu plan
 
-### Installation
+# Apply infrastructure
+jarvis tofu apply
+```
 
-Build the CLI binary:
+### 5. Portable Execution
+Jarvis runs identically on your MacBook and inside a remote Docker container.
+- **Local Mode**: Uses your local Docker/LXC agents.
+- **Remote Mode**: Connects to remote Dagger engines via `REMOTE_DAGGER_ADDR`.
+
+---
+
+## 🛠 Installation & Usage
+
+### 1. Build from Source
+Requirements: Go 1.23+
 ```bash
 go build -o jarvis ./cmd/jarvis
 ```
 
-### Running
-
-Run the built binary:
+### 2. Run with Docker
+The "Platform-in-a-Box" experience. This image includes all dependencies (Dagger, K9s, LXC, 1Password).
 ```bash
-./jarvis
+docker build -t jarvis-cli -f deploy/Dockerfile .
+docker run -it -v /var/run/docker.sock:/var/run/docker.sock jarvis-cli
 ```
 
-Or run directly with Go:
-```bash
-go run ./cmd/jarvis
-```
-
-### Environment Variables
+### 3. Configuration
+Configure Jarvis via Environment Variables:
 
 | Variable | Description | Default |
 |----------|-------------|---------|
-| `REMOTE_DAGGER_ADDR` | Address of a remote Dagger engine (e.g., `tcp://dagger-engine:1234`) | `""` (Local engine) |
+| `REMOTE_DAGGER_ADDR` | Address of a remote Dagger engine (TCP) | "" (Local) |
+| `JARVIS_ENABLE_LXC` | Enable LXC management features | `false` |
+| `JARVIS_USE_OP` | Enable 1Password Secret Injection | `false` |
 
-### Interactive Mode
-Once started, the CLI provides an interactive TUI. You can type commands in natural language.
+---
 
-**Examples:**
-- "List pods in the default namespace"
-- "Deploy nginx"
+## 📂 Project Structure
 
-### Examples
-
-**Connect to a remote Dagger engine:**
-```bash
-export REMOTE_DAGGER_ADDR=tcp://192.168.1.10:1234
-./jarvis
 ```
+├── cmd/jarvis          # Main CLI Entry Point
+├── deploy              # Docker packaging
+├── docs                # Architecture & Plans
+├── internal
+│   ├── dagger          # Dagger Engine Executor
+│   ├── k9s             # K9s TUI Bridge
+│   ├── lxc             # LXC Management Layer
+│   └── secrets         # 1Password Integration
+└── services            # (Monorepo) Backend microservices
+```
+
+## 📜 License
+MIT

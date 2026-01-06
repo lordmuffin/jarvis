@@ -1,0 +1,6 @@
+{
+    "name": "tofu",
+    "source": "./dagger/tofu",
+    "sdk": "go",
+    "description": "Jarvis Tofu orchestrator for infrastructure deployment"
+}
