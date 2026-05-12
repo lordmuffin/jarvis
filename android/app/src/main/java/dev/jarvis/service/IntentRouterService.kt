@@ -15,6 +15,7 @@ import dev.jarvis.MainActivity
 import dev.jarvis.R
 import dev.jarvis.service.inference.ClassifierHolder
 import dev.jarvis.service.inference.IntentClassifier
+import dev.jarvis.service.inference.LiteRtClassifier
 import dev.jarvis.service.inference.StubClassifier
 import dev.jarvis.service.model.Accelerator
 
@@ -64,10 +65,39 @@ class IntentRouterService : Service() {
 
     override fun onBind(intent: Intent?): IBinder? = null
 
-    /** 1.5a stub. 1.5b will mmap intent_router.tflite from assets and replace this. */
+    /** Try LiteRT first; fall back to the stub with a loud log if the model
+     *  asset is absent (pre-1.4) or the runtime cannot compile it.
+     *  No silent fallback — the persistent service notification reports the
+     *  actually-used accelerator. */
     private fun buildClassifier(): IntentClassifier {
-        accelerator = Accelerator.AUTO_UNKNOWN
-        return StubClassifier()
+        val litert = LiteRtClassifier.tryCreate(applicationContext)
+        return if (litert != null) {
+            accelerator = readAcceleratorFromLiteRt(litert)
+            Log.i(TAG, "Using LiteRT classifier; accelerator=$accelerator")
+            litert
+        } else {
+            accelerator = Accelerator.AUTO_UNKNOWN
+            Log.w(TAG, "LiteRT unavailable — using StubClassifier; check assets/intent_router.tflite")
+            StubClassifier()
+        }
+    }
+
+    /** The classifier reports its accelerator on every IntentDecision; we read
+     *  it once at cold start by issuing a synthetic encode for the foreground
+     *  notification subtitle. Cheap (model already warm). */
+    private fun readAcceleratorFromLiteRt(litert: LiteRtClassifier): Accelerator {
+        return try {
+            val decision = litert.classify(
+                dev.jarvis.service.model.IncomingEvent(
+                    text = "warmup",
+                    source = dev.jarvis.service.model.EventSource.MANUAL_TEST,
+                ),
+            )
+            decision.acceleratorUsed
+        } catch (e: Exception) {
+            Log.w(TAG, "warm-up classify failed", e)
+            Accelerator.AUTO_UNKNOWN
+        }
     }
 
     private fun startForegroundCompat() {
