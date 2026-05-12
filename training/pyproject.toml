@@ -37,9 +37,10 @@ train = [
 convert = [
     "ai-edge-litert>=1.0.0",
 ]
-# 1.2 — Gemini client. Added only after prompt-review gate is cleared.
+# 1.2 — Gemini client. Cleared the prompt-review gate; google-genai is the
+# unified SDK used by jarvis_training.synth.gemini_client.
 gemini = [
-    "google-generativeai>=0.7",
+    "google-genai>=0.7",
 ]
 
 [tool.setuptools.packages.find]

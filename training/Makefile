@@ -41,12 +41,8 @@ review-prompt:
 
 synth:
 	@if [ -z "$(VAULT)" ]; then echo "VAULT (or \$$JARVIS_VAULT_PATH) is required"; exit 2; fi
-	@echo "1.2 Gemini synth is gated. To unblock:"
-	@echo "  1. Run 'make review-prompt > /tmp/jarvis-prompt-review.txt'"
-	@echo "  2. Have the user approve it."
-	@echo "  3. Add jarvis_training/synth/gemini_client.py (real SDK adapter)."
-	@echo "  4. Re-run 'make synth'."
-	@exit 3
+	@if [ -z "$(JARVIS_CLOUD_LLM_API_KEY)" ]; then echo "JARVIS_CLOUD_LLM_API_KEY is required"; exit 2; fi
+	$(PYTHON) -m jarvis_training.synth.cli_generate --vault "$(VAULT)" --raw data/raw/intents.jsonl
 
 validate:
 	@if [ -z "$(VAULT)" ]; then echo "VAULT is required"; exit 2; fi
