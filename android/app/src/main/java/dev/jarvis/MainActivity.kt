@@ -10,7 +10,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -19,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import dev.jarvis.stats.StatsScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,17 +32,28 @@ class MainActivity : ComponentActivity() {
                 Surface(modifier = Modifier.fillMaxSize()) {
                     Scaffold { padding ->
                         Column(
-                            modifier = Modifier.padding(padding).padding(16.dp),
-                            verticalArrangement = Arrangement.spacedBy(12.dp),
+                            modifier = Modifier
+                                .padding(padding)
+                                .verticalScroll(rememberScrollState()),
                         ) {
-                            Text("Jarvis", style = MaterialTheme.typography.headlineMedium)
-                            Text(
-                                "On-device intent classifier. Foreground service runs in the background.",
-                                style = MaterialTheme.typography.bodyMedium,
-                            )
-                            Spacer(modifier = Modifier.height(8.dp))
-                            ManualTriggerButton()
-                            // StatsScreen content lands in 1.9.
+                            Column(
+                                modifier = Modifier.padding(16.dp),
+                                verticalArrangement = Arrangement.spacedBy(12.dp),
+                            ) {
+                                Text("Jarvis", style = MaterialTheme.typography.headlineMedium)
+                                Text(
+                                    "On-device intent classifier. Foreground service runs in the background.",
+                                    style = MaterialTheme.typography.bodyMedium,
+                                )
+                                Spacer(modifier = Modifier.height(4.dp))
+                                ManualTriggerButton()
+                            }
+
+                            HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp))
+
+                            StatsScreen()
+
+                            Spacer(modifier = Modifier.height(16.dp))
                         }
                     }
                 }

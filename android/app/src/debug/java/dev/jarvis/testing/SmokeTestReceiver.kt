@@ -4,7 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
-import dev.jarvis.service.IntentRouterClient
+import dev.jarvis.service.ToastPipeline
 import dev.jarvis.service.model.EventSource
 import dev.jarvis.service.model.IncomingEvent
 
@@ -13,6 +13,9 @@ import dev.jarvis.service.model.IncomingEvent
  *
  *   adb shell am broadcast -a dev.jarvis.testing.SMOKE_EVENT \
  *     --es text "subject: ..." --es source manual_test
+ *
+ * Uses [ToastPipeline] so the Decision row is written to Room and the
+ * smoke-test DB assertions (classified count, p95 latency) pass.
  *
  * Not declared in the release manifest — production cannot be poked.
  */
@@ -25,7 +28,8 @@ class SmokeTestReceiver : BroadcastReceiver() {
         }
         val sourceName = intent.getStringExtra(EXTRA_SOURCE) ?: "manual_test"
         val source = EventSource.fromWire(sourceName) ?: EventSource.MANUAL_TEST
-        val decision = IntentRouterClient(context).classify(
+
+        val decision = ToastPipeline(context).process(
             IncomingEvent(text = text, source = source),
         )
         Log.i(

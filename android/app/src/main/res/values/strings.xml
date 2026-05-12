@@ -18,6 +18,19 @@
     <string name="action_edit">Edit</string>
     <string name="action_dismiss">Dismiss</string>
 
+    <!-- Edit-draft activity -->
+    <string name="edit_draft_title">Edit draft</string>
+    <string name="edit_send">Send</string>
+    <string name="edit_cancel">Cancel</string>
+
+    <!-- Stats screen -->
+    <string name="stats_title">Stats</string>
+    <string name="stats_accept_rate_label">Accept rate (30d)</string>
+    <string name="stats_toast_volume_label">Toast volume (7d)</string>
+    <string name="stats_latency_label">Inference latency (24h)</string>
+    <string name="stats_doze_killed">⚠ DOZE_KILLED?</string>
+    <string name="stats_no_data">—</string>
+
     <!-- Setup-incomplete notification -->
     <string name="setup_incomplete_title">Jarvis setup incomplete</string>
     <string name="setup_incomplete_body">The vault .jarvisrc file is missing. Outbox decisions will be kept SQLite-only until you fix this.</string>

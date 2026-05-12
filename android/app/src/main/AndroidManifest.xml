@@ -48,6 +48,13 @@
             android:exported="false"
             android:label="@string/manual_trigger_title" />
 
+        <!-- Edit-draft bottom sheet launched by ToastActionReceiver on Edit tap. -->
+        <activity
+            android:name=".ui.edit.EditActivity"
+            android:exported="false"
+            android:label="@string/edit_draft_title"
+            android:theme="@style/Theme.Jarvis" />
+
         <!-- Foreground service. specialUse declared per SDK 34 requirements;
              see https://developer.android.com/about/versions/14/changes/fgs-types-required -->
         <service
@@ -81,16 +88,10 @@
             </intent-filter>
         </receiver>
 
-        <!-- WorkManager backstop. -->
-        <provider
-            android:name="androidx.startup.InitializationProvider"
-            android:authorities="${applicationId}.androidx-startup"
-            android:exported="false"
-            tools:node="merge">
-            <meta-data
-                android:name="androidx.work.WorkManagerInitializer"
-                android:value="androidx.startup"
-                tools:node="remove" />
-        </provider>
+        <!-- AlarmManager callback that records user_action=timeout if the HUN
+             was never acted on within the 30-minute window. -->
+        <receiver
+            android:name=".ui.notif.TimeoutReceiver"
+            android:exported="false" />
     </application>
 </manifest>

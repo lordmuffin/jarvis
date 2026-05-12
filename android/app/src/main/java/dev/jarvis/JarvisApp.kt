@@ -8,6 +8,7 @@ import android.content.Intent
 import android.os.Build
 import android.util.Log
 import androidx.core.content.ContextCompat
+import dev.jarvis.service.HeartbeatWorker
 import dev.jarvis.service.IntentRouterService
 
 class JarvisApp : Application() {
@@ -15,6 +16,7 @@ class JarvisApp : Application() {
         super.onCreate()
         registerNotificationChannels()
         startClassifierService()
+        HeartbeatWorker.schedule(this)
     }
 
     private fun registerNotificationChannels() {
