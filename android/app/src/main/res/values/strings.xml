@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Jarvis</string>
+    <string name="manual_trigger_title">Manual trigger</string>
+
+    <!-- Notification channel labels -->
+    <string name="channel_toasts">Intent toasts</string>
+    <string name="channel_toasts_description">Approve / Edit / Dismiss prompts for classified events.</string>
+    <string name="channel_service">Service status</string>
+    <string name="channel_service_description">Persistent notification for the foreground classifier service.</string>
+
+    <!-- Service notification -->
+    <string name="service_running">Jarvis running</string>
+    <string name="service_running_subtitle">Classifier ready · %1$s accelerator</string>
+
+    <!-- HUN action labels -->
+    <string name="action_approve">Approve</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_dismiss">Dismiss</string>
+
+    <!-- Setup-incomplete notification -->
+    <string name="setup_incomplete_title">Jarvis setup incomplete</string>
+    <string name="setup_incomplete_body">The vault .jarvisrc file is missing. Outbox decisions will be kept SQLite-only until you fix this.</string>
+</resources>

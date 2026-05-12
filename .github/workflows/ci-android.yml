@@ -1,0 +1,73 @@
+name: ci-android
+
+on:
+  push:
+    paths:
+      - "android/**"
+      - ".github/workflows/ci-android.yml"
+  pull_request:
+    paths:
+      - "android/**"
+      - ".github/workflows/ci-android.yml"
+
+jobs:
+  forbidden-import-check:
+    # Cheap grep — runs without Android SDK or Gradle. Catches any commit that
+    # reintroduces the legacy TF-Lite. The Gradle `verifyForbiddenDependencies`
+    # task runs the same logic against resolved classpaths, but this step gives
+    # us a fast fail signal in PRs without spinning up an emulator.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: No legacy tensorflow-lite imports
+        # Comments and the enforcement code itself reference the forbidden
+        # coordinates for documentation. We only fail on actual `import`
+        # statements, which would be needed to use the library at runtime.
+        # Build-script dependency declarations are caught by
+        # `verifyForbiddenDependencies` in the Gradle build (resolved
+        # classpath check), which runs in build-and-test below.
+        run: |
+          set -euo pipefail
+          if grep -rnE "^[[:space:]]*import[[:space:]]+org\.tensorflow" \
+              android/ \
+              --include="*.kt" --include="*.java"; then
+            echo "::error::Forbidden org.tensorflow.lite import detected."
+            echo "Phase 1 sovereignty: use com.google.ai.edge.litert only."
+            exit 1
+          fi
+          echo "No legacy tensorflow-lite imports."
+
+  build-and-test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: android
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+      - name: Cache Gradle
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ hashFiles('android/**/*.gradle*', 'android/gradle/libs.versions.toml') }}
+      - name: Generate Gradle wrapper (if absent)
+        # The wrapper JAR isn't committed; CI regenerates it from gradle-wrapper.properties.
+        run: |
+          if [ ! -f gradlew ]; then
+            gradle wrapper --gradle-version 8.10.2
+          fi
+      - name: Build debug + unit tests + forbidden-dep check
+        run: ./gradlew :app:assembleDebug :app:testDebugUnitTest :app:verifyForbiddenDependencies --no-daemon
+      - name: Upload debug APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: jarvis-debug-apk
+          path: android/app/build/outputs/apk/debug/*.apk
+          if-no-files-found: warn

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application>
+        <!-- Debug-only: smoke-test broadcast receiver fed by scripts/phase-1-smoke-test.sh.
+             Not present in the release manifest, so the production app cannot be poked
+             via `am broadcast`. -->
+        <receiver
+            android:name=".testing.SmokeTestReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="dev.jarvis.testing.SMOKE_EVENT" />
+            </intent-filter>
+        </receiver>
+    </application>
+</manifest>
