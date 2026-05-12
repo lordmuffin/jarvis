@@ -1,48 +1,50 @@
 # Jarvis
-**The MONOREPO Executive Assistant**
 
-This repository contains the microservices and applications that power Jarvis, a personal knowledge automation platform.
+**Sovereign mobile AI executive assistant** — Phase 0/1 daily-driver MVP.
 
-## Architecture
+A small on-device classifier (MobileBERT, LiteRT, ~25 MB INT8) running as a foreground
+service on a Pixel 8, classifying incoming events into 7 intent categories, surfacing
+them as interactive Approve / Edit / Dismiss toasts, with a Termux-hosted llama.cpp
+mid-tier for burst escalation. No Gemini Nano, no Firebase ML, no Play Services ML.
+Network egress is Tailscale-only.
 
-The system is composed of several key components:
+## Layout
 
-### Apps
-- **[Jarvis Console](apps/jarvis-console/README.md)**: The administrative "Control Plane" dashboard. Built with Next.js, it provides system monitoring (HUD), traffic control visualization, and configuration management.
+| Path | What |
+|---|---|
+| [android/](android/) | Jetpack Compose + Kotlin app, foreground `IntentRouterService` |
+| [training/](training/) | Python pipeline: vault → Gemini synth → MobileBERT fine-tune → LiteRT |
+| [termux/](termux/) | Mid-tier llama.cpp Vulkan build + perf-core launcher |
+| [docs/](docs/) | Bring-up runbook, architecture, KPIs, ADRs |
+| [scripts/](scripts/) | Host-side verify + smoke-test scripts |
 
-### Services
-- **[Intelligent Burst Router](services/router/README.md)**: A FastAPI-based "Smart Router" that manages traffic between the local Lemonade Server and Cloud Providers (Gemini/Azure). It makes routing decisions based on Time-To-First-Token (TTFT) and System Capacity (Memory Pressure).
-- **Provocateur Interviewer**: Real-time voice interview service.
-- **Jarvis Core**: Core logic and integrations.
+## Status
 
-### Infrastructure
-- **Lemonade Server**: Local LLM Inference Server.
-- **Qdrant**: Vector Database for RAG.
-- **NATS**: Messaging System.
-- **CloudNativePG**: PostgreSQL for persistence.
+| Phase | State |
+|---|---|
+| 0 — Environment foundation | in progress |
+| 1 — Daily-driver MVP | not started |
+| 2 — Soul loop / vault writeback | out of scope |
+| 3 — MCP UI atoms beyond Approve/Edit | out of scope |
 
-## Getting Started
+See [docs/phase-1-architecture.md](docs/phase-1-architecture.md) for the intent schema
+and event-to-toast flow. See [docs/kpis.md](docs/kpis.md) for the three KPIs (accept
+rate, toast volume, p95 latency) and acceptance gates.
 
-### Prerequisites
-- Docker & Docker Compose
-- Python 3.11+
-- Node.js 18+
+## Legacy homelab stack
 
-### Local Development
-To start the entire stack locally:
+The previous content of this repo — `jarvis-console`, `services/router` (Intelligent
+Burst Router), `services/provocateur-interviewer`, and the `infrastructure/components`
++ `clusters/np-home-homelab` K8s tree — is preserved on the **`legacy/homelab-stack`**
+branch. The Phase 1 mid-tier (Termux llama.cpp) deliberately does not consume that
+router; sovereignty principle keeps escalation on-device by default.
 
-```bash
-docker-compose up --build
-```
+## Quickstart
 
-This will spin up:
-- **Router**: `http://localhost:8000`
-- **Console**: `http://localhost:3000`
-- **PostgreSQL**: `localhost:5432`
+You are not expected to build any of this until Phase 0 verification passes on the
+target device. Start with:
 
-## Deployment
-
-The project uses Kubernetes (Kustomize) for deployment.
-- **Router**: `services/router/kustomization.yaml`
-- **Qdrant**: `infrastructure/components/qdrant`
-- **NATS**: `infrastructure/components/nats`
+1. Read [docs/phase-0-bringup.md](docs/phase-0-bringup.md).
+2. Set `JARVIS_HOMELAB_HOST` and `JARVIS_VAULT_PATH` in `~/.jarvisrc` on the phone.
+3. Run [scripts/phase-0-verify.sh](scripts/phase-0-verify.sh) in Termux.
+4. Proceed to Phase 1 once verify exits 0.

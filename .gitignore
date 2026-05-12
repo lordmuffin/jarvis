@@ -205,3 +205,46 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# ---- Jarvis Phase 0/1 additions ----
+
+# Android / Gradle / Kotlin
+android/.gradle/
+android/build/
+android/app/build/
+android/captures/
+android/local.properties
+android/*.iml
+android/.idea/
+android/.cxx/
+*.apk
+*.aab
+*.ap_
+*.dex
+*.keystore
+android/key.properties
+
+# Training pipeline artifacts (large, regenerable from clean JSONL + Keras checkpoint)
+training/data/raw/
+training/data/clean/
+training/artifacts/*.keras
+training/artifacts/*.h5
+training/artifacts/*.tflite
+training/artifacts/checkpoints/
+# Keep the sidecar metadata + tokenizer (single source of truth) checked in:
+!training/artifacts/tokenizer.json
+!training/artifacts/.tokenizer.sha256
+!training/artifacts/model_metadata.json
+
+# Termux / llama.cpp build outputs (built on-device, never committed)
+termux/build/
+termux/llama.cpp/
+
+# Local secrets and per-machine config
+.jarvisrc
+.env
+.env.local
+
+# OS junk
+.DS_Store
+Thumbs.db
