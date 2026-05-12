@@ -29,6 +29,7 @@ dev = [
 train = [
     "tensorflow>=2.16",
     "tf-keras>=2.16",
+    "transformers>=4.40",
     "datasets>=2.20",
     "scikit-learn>=1.5",
     "tokenizers>=0.19",

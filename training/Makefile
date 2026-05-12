@@ -51,12 +51,17 @@ validate:
 		--clean data/clean/intents.jsonl
 
 train:
-	@echo "1.3 not yet implemented"
-	@exit 3
+	$(PYTHON) -m jarvis_training.train.cli_train \
+		--data data/clean/intents.jsonl \
+		--artifacts artifacts
 
 convert:
-	@echo "1.4 not yet implemented"
-	@exit 3
+	$(PYTHON) -m jarvis_training.convert.cli_convert_ptq \
+		--keras artifacts/mobilebert_intent.keras \
+		--tokenizer artifacts/tokenizer.json \
+		--data data/clean/intents.jsonl \
+		--artifacts artifacts \
+		--assets ../android/app/src/main/assets
 
 all: synth validate train convert
 
