@@ -1,0 +1,10 @@
+packages:
+  - 'shared'
+  - 'web'
+
+allowBuilds:
+  sharp: false
+  unrs-resolver: false
+ignoredBuiltDependencies:
+  - sharp
+  - unrs-resolver
