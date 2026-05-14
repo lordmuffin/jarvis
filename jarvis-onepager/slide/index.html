@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1920">
+  <title>jarvis — 16:9 slide</title>
+  <link rel="stylesheet" href="slide.css">
+</head>
+<body>
+<div class="slide">
+
+  <!-- ── Title bar ── -->
+  <header class="slide-header">
+    <span class="slide-title">jarvis</span>
+    <div class="slide-status">
+      <span class="status-dot"></span>
+      phase 0 · queued · 2026-05-13
+    </div>
+  </header>
+
+  <!-- ── Body: 3 columns ── -->
+  <main class="slide-body">
+
+    <!-- Left: Thesis + runtime status -->
+    <div class="col-left">
+      <div>
+        <div class="slide-eyebrow">// thesis</div>
+        <p class="slide-thesis">Open knowledge infrastructure is the durable moat. The window is now — execution UX is shipping; the knowledge substrate is unclaimed.</p>
+      </div>
+      <div class="slide-mini-status">
+        <div class="mini-status-line">runtime: goose + ollama</div>
+        <div class="mini-status-line">surface: pixel 9 + ntfy</div>
+        <div class="mini-status-line">substrate: vault md</div>
+      </div>
+    </div>
+
+    <!-- Center: Architecture diagram (SVG — regenerate via scripts/export-svg.mjs) -->
+    <div class="col-center">
+      <!--ARCH_SVG_DARK_PLACEHOLDER-->
+      <!-- Fallback if SVG not inlined -->
+      <svg viewBox="0 0 880 520" role="img" aria-label="Jarvis architecture — run scripts/export-svg.mjs to inline" style="border:1px dashed #27272A; border-radius:12px;">
+        <text x="440" y="260" text-anchor="middle" font-family="monospace" font-size="18" fill="#71717A">Run scripts/export-svg.mjs to inline diagram</text>
+      </svg>
+      <div class="arch-caption">gmail → goose → ollama + vault → ntfy → approve → send → audit log</div>
+    </div>
+
+    <!-- Right: Five Principles (compressed — no rules-out for slide density) -->
+    <div class="col-right">
+      <!-- Mobile-First -->
+      <div class="slide-principle">
+        <svg class="principle-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#A1A1AA" stroke-width="1.5" aria-hidden="true">
+          <rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18" stroke-linecap="round"/>
+        </svg>
+        <div class="principle-text">
+          <span class="principle-name">Mobile-First</span>
+          <span class="principle-gloss">Phone is the body; toast is the UX</span>
+        </div>
+      </div>
+      <!-- Sovereign -->
+      <div class="slide-principle">
+        <svg class="principle-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#A1A1AA" stroke-width="1.5" aria-hidden="true">
+          <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+        </svg>
+        <div class="principle-text">
+          <span class="principle-name">Sovereign</span>
+          <span class="principle-gloss">Local inference, Tailscale burst, no cloud v1</span>
+        </div>
+      </div>
+      <!-- Router -->
+      <div class="slide-principle">
+        <svg class="principle-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#A1A1AA" stroke-width="1.5" aria-hidden="true">
+          <circle cx="12" cy="5" r="2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/>
+          <line x1="12" y1="7" x2="5" y2="17"/><line x1="12" y1="7" x2="19" y2="17"/>
+        </svg>
+        <div class="principle-text">
+          <span class="principle-name">Router</span>
+          <span class="principle-gloss">Proposes, never executes autonomously</span>
+        </div>
+      </div>
+      <!-- Knowledge Layer -->
+      <div class="slide-principle">
+        <svg class="principle-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#A1A1AA" stroke-width="1.5" aria-hidden="true">
+          <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+        </svg>
+        <div class="principle-text">
+          <span class="principle-name">Knowledge Layer</span>
+          <span class="principle-gloss">Markdown vault; grep-able, diffable, git-committed</span>
+        </div>
+      </div>
+      <!-- With a Soul -->
+      <div class="slide-principle">
+        <svg class="principle-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#A1A1AA" stroke-width="1.5" aria-hidden="true">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        </svg>
+        <div class="principle-text">
+          <span class="principle-name">With a Soul</span>
+          <span class="principle-gloss">Identity in plain text; survives hardware death</span>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ── Footer bar ── -->
+  <footer class="slide-footer">
+    <div class="footer-left">phase 0 locked · phase 1 queued</div>
+    <div class="footer-right">2026-05-13 · andrew/jarvis · g:a3f7c2e</div>
+  </footer>
+
+</div>
+</body>
+</html>

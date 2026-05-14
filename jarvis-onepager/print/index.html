@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>jarvis — one-pager</title>
+  <link rel="stylesheet" href="print.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- Masthead -->
+<div class="masthead">
+  <div class="masthead-name">jarvis</div>
+  <div class="masthead-right">
+    <span class="status-pill">● phase 0 · queued</span>
+    <div class="masthead-date">2026-05-13</div>
+  </div>
+</div>
+
+<!-- Thesis -->
+<div class="thesis">
+  <div class="eyebrow">// the thesis</div>
+  <p>Jarvis exists because the durable moat against well-funded autonomous-execution agents is open knowledge infrastructure that closed AI vendors structurally cannot replicate. The bet is that a Markdown-native, vendor-neutral knowledge surface becomes the layer those agents query rather than rebuild. The window is now because the autonomous-agent market is racing to ship execution UX while leaving the knowledge substrate unclaimed.</p>
+</div>
+
+<!-- Architecture Diagram (SVG inlined by build.sh) -->
+<div class="arch-diagram" id="arch-diagram-container">
+  <!-- ARCH_SVG_PLACEHOLDER -->
+</div>
+<div class="arch-caption">gmail → goose → ollama + vault → ntfy → approve → send → audit log</div>
+
+<!-- Five Principles -->
+<div class="principles">
+  <div class="principle">
+    <div class="principle-name">Mobile-First</div>
+    <div class="principle-gloss">The phone is the body — Pixel is the primary surface, toast is the primary interaction.</div>
+    <div class="principle-rules">Rules out: laptop-tethered workflows.</div>
+  </div>
+  <div class="principle">
+    <div class="principle-name">Sovereign</div>
+    <div class="principle-gloss">Default local inference, burst over Tailscale, no commercial cloud in v1.</div>
+    <div class="principle-rules">Rules out: API-keyed deps, hosted DBs.</div>
+  </div>
+  <div class="principle">
+    <div class="principle-name">Router</div>
+    <div class="principle-gloss">Jarvis proposes, Andrew approves — Approve / Edit / Dismiss is the v1 UX.</div>
+    <div class="principle-rules">Rules out: autonomous send/post/commit.</div>
+  </div>
+  <div class="principle">
+    <div class="principle-name">Knowledge Layer</div>
+    <div class="principle-gloss">Obsidian-compatible Markdown vault in EPARAX topology; soul lives as plain text.</div>
+    <div class="principle-rules">Rules out: proprietary DBs, binary stores.</div>
+  </div>
+  <div class="principle">
+    <div class="principle-name">With a Soul</div>
+    <div class="principle-gloss">Identity is irreducible — CLAUDE.md + soul.md + decision history.</div>
+    <div class="principle-rules">Rules out: vibes-as-soul, undocumented drift.</div>
+  </div>
+</div>
+
+<!-- Status Table -->
+<table class="status-table">
+  <thead>
+    <tr><th>PHASE</th><th>GOAL</th><th>STATE</th><th>EFFORT</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><span class="status-active">&gt;</span>phase 0</td>
+      <td>Decision lockdown + dev env (Goose + Ollama + emulator)</td>
+      <td class="state-queued">queued</td>
+      <td>1–2 wks · 6–12h</td>
+    </tr>
+    <tr>
+      <td>&nbsp;phase 1</td>
+      <td>Mobile router skeleton — first Gmail draft round-trip on Pixel</td>
+      <td class="state-queued">queued</td>
+      <td>4–6 wks · 24–40h</td>
+    </tr>
+    <tr>
+      <td>&nbsp;phase 2</td>
+      <td>Knowledge layer integration — vault MCP + embeddings + Syncthing</td>
+      <td class="state-queued">queued</td>
+      <td>4–6 wks · 30–48h</td>
+    </tr>
+    <tr>
+      <td>&nbsp;phase 3</td>
+      <td>Persona library + daily-driver MVP (5:30 AM digest to phone)</td>
+      <td class="state-queued">queued</td>
+      <td>4–6 wks · 24–40h</td>
+    </tr>
+    <tr>
+      <td>&nbsp;phase 4</td>
+      <td>Telegram hybrid — TTS playback + interactive triage</td>
+      <td class="state-queued">queued</td>
+      <td>3–4 wks · 18–28h</td>
+    </tr>
+    <tr>
+      <td>&nbsp;phase 5+</td>
+      <td>On-device 3B model, Soul Parity Suite, skill scale-out, OSS release</td>
+      <td class="state-queued">queued</td>
+      <td>70+ h</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Ships Next + What This Is Not -->
+<div class="bottom-cols">
+  <div class="ships-next">
+    <h3>Ships next — Phase 0</h3>
+    <p>Goose running locally against Ollama, one vault skill ported as MCP, Pixel 9 emulator joined to the homelab tailnet. Validation: goose run returns a vault-grounded answer in ≤ 15 s with zero egress beyond Tailscale.</p>
+    <div class="kill-criterion">Kill criterion: pivot to OpenCode after 8 h if Goose can't load local-model provider.</div>
+  </div>
+  <ul class="not-list">
+    <li>Not an autonomous agent — Router model is the product.</li>
+    <li>Not a competitor to apex.host — the complement layer.</li>
+    <li>Not a chat UX — Personas are queryable structured data.</li>
+    <li>Not cloud-required — airplane-mode test is the falsifier.</li>
+    <li>Not a five-front commitment — other projects cut this cycle.</li>
+  </ul>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  <div class="footer-ns">Compounding Infrastructure · Long-form Shipped · Authority Reps</div>
+  <div class="footer-glossary">
+    <span class="gloss-entry"><span class="gloss-term">MCP</span> Model Context Protocol</span>
+    <span class="gloss-entry"><span class="gloss-term">Goose</span> Block agent runtime</span>
+    <span class="gloss-entry"><span class="gloss-term">EPARAX</span> vault topology</span>
+    <span class="gloss-entry"><span class="gloss-term">Router</span> propose-not-execute UX</span>
+  </div>
+  <div class="footer-page">1/1</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,191 @@
+@page {
+  size: letter;
+  margin: 0.75in;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #FAFAFA;
+  --surface: #FFFFFF;
+  --surface-2: #F4F4F5;
+  --fg: #0A0A0A;
+  --fg-muted: #52525B;
+  --fg-subtle: #71717A;
+  --border: #E4E4E7;
+  --border-strong: #D4D4D8;
+  --accent: #2563EB;
+  --success: #15803D;
+  --warn: #A16207;
+}
+
+body {
+  font-family: 'Geist Sans', Inter, system-ui, sans-serif;
+  font-size: 10pt;
+  line-height: 1.45;
+  color: var(--fg);
+  background: var(--bg);
+  /* live area: 7.0" × 9.5" inside 0.75in margins */
+  max-width: 7in;
+  overflow: hidden;
+}
+
+/* ── Masthead ── */
+.masthead {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-bottom: 6pt;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 8pt;
+  height: 0.65in;
+}
+.masthead-name {
+  font-family: 'Geist Mono', 'JetBrains Mono', monospace;
+  font-size: 22pt;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--fg);
+}
+.masthead-right { text-align: right; }
+.status-pill {
+  font-family: 'Geist Mono', monospace;
+  font-size: 8.5pt;
+  color: var(--fg-muted);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 1pt 6pt;
+  display: inline-block;
+}
+.masthead-date {
+  font-family: 'Geist Mono', monospace;
+  font-size: 8.5pt;
+  color: var(--fg-muted);
+  margin-top: 2pt;
+}
+
+/* ── Thesis ── */
+.thesis { margin-bottom: 6pt; }
+.eyebrow {
+  font-family: 'Geist Mono', monospace;
+  font-size: 8.5pt;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+  margin-bottom: 3pt;
+}
+.thesis p { font-size: 10pt; max-width: 64ch; line-height: 1.4; }
+
+/* ── Architecture diagram ── */
+.arch-diagram { margin: 6pt 0; }
+.arch-diagram svg { width: 100%; height: auto; max-height: 3.2in; display: block; }
+.arch-caption {
+  font-family: 'Geist Mono', monospace;
+  font-size: 8.5pt;
+  color: var(--fg-muted);
+  margin-top: 2pt;
+}
+
+/* ── Five Principles ── */
+.principles {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 5pt;
+  margin-bottom: 8pt;
+}
+.principle {
+  padding: 5pt 6pt;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface);
+}
+.principle-name { font-size: 11pt; font-weight: 600; margin-bottom: 2pt; }
+.principle-gloss { font-size: 9pt; color: var(--fg-muted); line-height: 1.3; margin-bottom: 2pt; }
+.principle-rules { font-family: 'Geist Mono', monospace; font-size: 8.5pt; color: var(--fg-subtle); }
+
+/* ── Status table ── */
+.status-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Geist Mono', monospace;
+  font-size: 9pt;
+  margin-bottom: 8pt;
+}
+.status-table th {
+  font-size: 8.5pt;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--fg-muted);
+  text-align: left;
+  padding: 2pt 8pt 2pt 0;
+  border-bottom: 1px solid var(--border);
+}
+.status-table td {
+  padding: 2pt 8pt 2pt 0;
+  border-bottom: 1px solid var(--border);
+  color: var(--fg-muted);
+}
+.status-table td:first-child { color: var(--fg); }
+.status-active { color: var(--accent) !important; }
+.state-queued { color: var(--warn); }
+.state-shipped { color: var(--success); }
+
+/* ── Ships Next + What This Is Not (2-col) ── */
+.bottom-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10pt;
+  margin-bottom: 6pt;
+}
+.ships-next {
+  background: var(--surface-2);
+  border-radius: 6px;
+  padding: 7pt;
+  border-left: 3px solid var(--accent);
+}
+.ships-next h3 { font-size: 11pt; font-weight: 600; margin-bottom: 3pt; }
+.ships-next p { font-size: 9pt; line-height: 1.35; color: var(--fg-muted); }
+.kill-criterion {
+  font-family: 'Geist Mono', monospace;
+  font-size: 8.5pt;
+  color: var(--warn);
+  margin-top: 3pt;
+}
+.not-list { list-style: none; }
+.not-list li {
+  font-size: 9pt;
+  color: var(--fg-muted);
+  padding: 1.5pt 0 1.5pt 10pt;
+  position: relative;
+  line-height: 1.3;
+}
+.not-list li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--fg-subtle);
+}
+
+/* ── Footer ── */
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-top: 1px solid var(--border);
+  padding-top: 4pt;
+  font-family: 'Geist Mono', monospace;
+  font-size: 8.5pt;
+}
+.footer-ns { color: var(--fg-muted); }
+.footer-glossary { display: flex; gap: 10pt; }
+.gloss-entry { color: var(--fg-muted); font-size: 8pt; }
+.gloss-term { font-weight: 500; color: var(--fg); }
+.footer-page { color: var(--fg-subtle); }
+
+/* ── Print overrides ── */
+@media print {
+  body { overflow: hidden; }
+  @page { orphans: 3; widows: 3; }
+  .principle { break-inside: avoid; }
+  .bottom-cols { break-inside: avoid; }
+}
